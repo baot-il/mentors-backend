@@ -1,7 +1,10 @@
 alembic==1.4.0
+autoenv==1.0.0
 Click==7.0
 Flask==1.1.1
+Flask-Ext==0.1
 Flask-Migrate==2.5.2
+Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.1
 gunicorn==19.4.5
 itsdangerous==1.1.0
