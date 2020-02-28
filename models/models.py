@@ -1,4 +1,4 @@
-from app import db
+from extensions import db
 import datetime as dt
 
 
