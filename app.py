@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request
+from db import _get_technologies
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import os
 
@@ -28,10 +29,10 @@ def hello():
     return "Hello World!"
 
 
-@app.route('/technologies')
+@app.route('/technologies', methods=['GET', 'POST'])
 @cross_origin()
 def get_technologies():
-    return {'technologies': ['Python', 'NodeJS', 'JavaScript', 'Machine Learning', 'TensorFlow']}
+    return _get_technologies(request)
 
 
 if __name__ == '__main__':

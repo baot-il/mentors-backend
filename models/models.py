@@ -1,5 +1,17 @@
 from extensions import db
 import datetime as dt
+from sqlalchemy.dialects import postgresql as pg
+
+
+class Technology(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text(), nullable=False)
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
 
 
 class Mentor(db.Model):
@@ -17,7 +29,7 @@ class Mentor(db.Model):
     match_preferences = db.Column(db.Text())
     multiple_mentees = db.Column(db.Boolean())
     can_simulate = db.Column(db.Boolean())
-    technologies = db.relationship('Technology', lazy=False)
+    technologies = db.Column(pg.ARRAY(db.String, dimensions=1))
     years_experience = db.Column(db.Text())
     comments = db.Column(db.Text())
 
@@ -40,7 +52,7 @@ class Mentee(db.Model):
     bio = db.Column(db.Text())
     academic_bio = db.Column(db.Text())
     job_search = db.Column(db.Text())
-    technologies = db.relationship('Technology', lazy=False)
+    technologies = db.Column(pg.ARRAY(db.String, dimensions=1))
     years_experience = db.Column(db.Text())
     comments = db.Column(db.Text())
 
@@ -68,14 +80,3 @@ class Match(db.Model):
 
     def __repr__(self):
         return '<match: {}->{}>'.format(self.mentor_id, self.mentee_id)
-
-
-class Technology(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text(), nullable=False)
-
-    def __init__(self, name):
-        self.name = name
-
-    def __repr__(self):
-        return '<id {}>'.format(self.id)
