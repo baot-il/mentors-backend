@@ -1,15 +1,26 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 import os
 
 
-app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(os.environ['APP_SETTINGS'])
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['CORS_HEADERS'] = 'Content-Type'
+    cors = CORS(app)
+    register_extensions(app)
+    return app
 
 
-from models import Mentor, Mentee, Match, Technology
+def register_extensions(app):
+    from extensions import db
+    from extensions import migrate
+    db.init_app(app)
+    migrate.init_app(app)
+
+
+app = create_app()
 
 
 @app.route('/')
@@ -18,6 +29,7 @@ def hello():
 
 
 @app.route('/technologies')
+@cross_origin()
 def get_technologies():
     return {'technologies': ['Python', 'NodeJS', 'JavaScript', 'Machine Learning', 'TensorFlow']}
 
