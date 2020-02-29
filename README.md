@@ -20,16 +20,16 @@ _baot-mentors_ is the docker container's name and can be changed freely.
 ### Local Server
 1. Clone this repository and install all dependencies using `pip install -r requirements.txt`.
    Consider using Python's virtual environment (_venv_) to prevent 
-   versions conflicts.
+   versioning conflicts.
    
-   > :mega: If you're experiencing installation problems with _psycopg2_, try installing it as a standalone
-   using the command `pip install psycopg2-binary`
+   > :mega: If you're experiencing installation problems with _psycopg2_, 
+   try installing it separately using the command `pip install psycopg2-binary`.
 
-2. Set the following environment variables (you can set them in PyCharm's run configurations):
+2. Set the following environment variables (you can do so in PyCharm's run configurations):
     * `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
     * `SECRET_KEY=someSecretStringUsedByFlask`
     * `APP_SETTINGS=config.DevelopementConfig`
-3. Run `reset_db.py` to initialize the DB tables.
+3. Run `python reset_db.py` to initialize the DB tables.
 4. Run `python main_app.py` and verify (using the console output) that the server is running.
 5. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
 
@@ -52,13 +52,27 @@ responsible for all exposed APIs.
 
 
 ## DB Migrations
-Use _migrate.py_ to perform migration operations on the DB. 
-Once the script is final (and tested! :wink:), push it and run it remotely
-with `heroku run python migrate.py` (this will only work if
-[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is installed)
-Make sure you edit _models.py_ according to your new schema.
+To perform changes on the DB, follow these guidelines:
+1. Backup the database's current state (you can do this 
+[manually](https://data.heroku.com/datastores/35002e65-a561-4a72-a47c-c81b3cec2aa3#durability)
+from the database's resource page on Heroku).
+2. Edit _migrate.py_ to perform the desired operations on the DB.
+Use [Peewee's Schema Migrations](http://docs.peewee-orm.com/en/latest/peewee/playhouse.html#migrate)
+documentation and examples.
+3. Make sure you edit _models.py_ to reflect your new schema.
+4. Once the script is final (and tested locally! :wink:), push it to the remote
+repository.
+5. Run it on the staging app with `heroku run python migrate.py --app baot-mentors-stage` (you'll need 
+[Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)).
+6. Do the same with production: `heroku run python migrate.py --app baot-mentors-prod`
+
+To apply migrations to the local DB (and if you don't mind losing all local data) - 
+simply run _reset_db.py_ which will re-create the DB according to the schema in _models.py_.
 
 
-## Debugging
-Some tips :smile:
-* `heroku logs --app <app_name>`
+## Tips & Tricks :smile:
+* `heroku logs --app <app_name>` to show recent logs (use after crash...).
+* Both staging and production applications deploy automatically from `master`.
+
+
+## Project Architecture
