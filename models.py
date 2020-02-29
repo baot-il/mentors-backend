@@ -11,7 +11,8 @@ class BaseModel(Model):
 
 class Mentor(BaseModel):
     id = AutoField(primary_key=True)
-    full_name = TextField(index=True)
+    first_name = TextField()
+    last_name = TextField()
     email = TextField(index=True, unique=True)
     phone = TextField()
     created_on = DateTimeField(default=datetime.datetime.now)
@@ -28,10 +29,16 @@ class Mentor(BaseModel):
     years_experience = TextField(null=True)
     comments = TextField(null=True)
 
+    class Meta:
+        indexes = (
+            (('first_name', 'last_name'), True),
+        )
+
 
 class Mentee(BaseModel):
     id = AutoField(primary_key=True)
-    full_name = TextField(index=True)
+    first_name = TextField()
+    last_name = TextField()
     email = TextField(index=True)
     phone = TextField()
     created_on = DateTimeField(default=datetime.datetime.now)
@@ -41,6 +48,11 @@ class Mentee(BaseModel):
     technologies = ArrayField(field_class=TextField, null=True)
     years_experience = TextField(null=True)
     comments = TextField(null=True)
+    
+    class Meta:
+        indexes = (
+            (('first_name', 'last_name'), True),
+        )
 
 
 class Technology(BaseModel):
