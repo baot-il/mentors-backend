@@ -17,7 +17,7 @@ _baot-mentors_ is the docker container's name and can be changed freely.
 5. Clone this repository.
 6. Set the following environment variables (you can do so for your virtual
    environment):
-    * `DATABASE_URL=postgresql://postgres@somePassword@localhost/postgres`
+    * `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
     * `SECRET_KEY=someSecretStringUsedByFlask`
     * `APP_SETTINGS=config.DevelopemtnConfig`
 6. Run `reset_db.py` to initialize the DB tables.
