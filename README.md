@@ -26,4 +26,10 @@ _baot-mentors_ is the docker container's name and can be changed freely.
     * `SECRET_KEY=someSecretStringUsedByFlask`
     * `APP_SETTINGS=config.DevelopementConfig`
 7. Run `reset_db.py` to initialize the DB tables.
-   
+
+
+## Run a Local Server
+1. Make sure you first follow the instructions above, to have a local DB and connect to it.
+   Particularly, make sure you have all environment variables assigned.
+2. Run `python main_app.py` and verify (using the console output) that the server is running.
+3. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
