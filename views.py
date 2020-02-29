@@ -5,6 +5,9 @@ from models import Mentor, Mentee, Match, Technology
 from peewee import DoesNotExist, IntegrityError
 
 
+YEARS_EXPERIENCE = ['1-2', '3-4', '5-7', '8-10', '10+']
+
+
 @app.route('/')
 def homepage():
     return 'Hello World!'
@@ -42,3 +45,8 @@ def get_mentor_by_id(mentor_id):
         return {'mentors': Mentor.select().where(Mentor.id == mentor_id).dicts().get()}
     except DoesNotExist:
         return {'mentors': []}
+
+
+@app.route('/years_experience', methods=['GET'])
+def get_years_experience():
+    return {'years_experience': YEARS_EXPERIENCE}
