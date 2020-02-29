@@ -57,3 +57,8 @@ Once the script is final (and tested! :wink:), push it and run it remotely
 with `heroku run python migrate.py` (this will only work if
 [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is installed)
 Make sure you edit _models.py_ according to your new schema.
+
+
+## Debugging
+Some tips :smile:
+* `heroku logs --app <app_name>`
