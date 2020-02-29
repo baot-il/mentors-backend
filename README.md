@@ -15,10 +15,13 @@ _baot-mentors_ is the docker container's name and can be changed freely.
 * username: postgres
 * password: somePassword
 5. Clone this repository and install all dependencies using `pip install -r requirements.txt`.
-   Consider using a virtual environment to prevent versions conflicts.
+   Consider using Python's virtual environment (_venv_) to prevent 
+   versions conflicts.
+   :mega: If you're experiencing installation problems with _psycopg2_, try installing it as a standalone
+   using the command `pip install psycopg2-binary`
 6. Set the following environment variables (you can set them in PyCharm's run configurations):
     * `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
     * `SECRET_KEY=someSecretStringUsedByFlask`
     * `APP_SETTINGS=config.DevelopemtnConfig`
-6. Run `reset_db.py` to initialize the DB tables.
+7. Run `reset_db.py` to initialize the DB tables.
    
