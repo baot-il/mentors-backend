@@ -31,7 +31,7 @@ def mentors():
         try:
             Mentor.insert(mentor_data).execute()
         except IntegrityError:
-            return 'Mentor exists (email)'
+            return 'Mentor exists (email)', 409
     else:
         return {'mentors': [mentor_dict for mentor_dict in Mentor.select().dicts()]}
 
