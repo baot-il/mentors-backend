@@ -35,6 +35,7 @@ def mentors():
     if request.method == 'POST':
         try:
             Mentor.insert(mentor_data).execute()
+            return 'Success'
         except IntegrityError:
             return 'Mentor exists (email)', 409
 
