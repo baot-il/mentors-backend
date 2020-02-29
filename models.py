@@ -12,7 +12,7 @@ class BaseModel(Model):
 class Mentor(BaseModel):
     id = AutoField(primary_key=True)
     full_name = TextField(index=True)
-    email = TextField(index=True)
+    email = TextField(index=True, unique=True)
     phone = TextField()
     created_on = DateTimeField(default=datetime.datetime.now)
     workplace = TextField(null=True)
