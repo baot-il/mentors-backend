@@ -14,7 +14,7 @@ _baot-mentors_ is the docker container's name and can be changed freely.
 * port: 5432
 * username: postgres
 * password: somePassword
-5. Clone this repository.
+5. Clone this repository and install all dependencies using `pip install -r requirements.txt`.
 6. Set the following environment variables (you can do so for your virtual
    environment):
     * `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
