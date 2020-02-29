@@ -29,22 +29,27 @@ def technologies():
 @app.route('/mentors', methods=['GET', 'POST'])
 @cross_origin()
 def mentors():
+    if request.method == 'GET':
+        return {'mentors': [mentor_dict for mentor_dict in Mentor.select().dicts()]}
+    mentor_data = request.form
     if request.method == 'POST':
-        mentor_data = request.form
         try:
             Mentor.insert(mentor_data).execute()
         except IntegrityError:
             return 'Mentor exists (email)', 409
-    else:
-        return {'mentors': [mentor_dict for mentor_dict in Mentor.select().dicts()]}
 
 
-@app.route('/mentors/<mentor_id>')
+@app.route('/mentors/<mentor_id>', methods=['GET', 'PUT'])
 def get_mentor_by_id(mentor_id):
-    try:
-        return {'mentors': Mentor.select().where(Mentor.id == mentor_id).dicts().get()}
-    except DoesNotExist:
-        return {'mentors': []}
+    if request.method == 'GET':
+        try:
+            return {'mentors': Mentor.select().where(Mentor.id == mentor_id).dicts().get()}
+        except DoesNotExist:
+            return {'mentors': []}
+    elif request.method == 'PUT':
+        mentor_data = request.form
+        updated = Mentor.update(mentor_data).where(Mentor.id == mentor_id).execute()
+        return 'Success' if updated else 'Non updated'
 
 
 @app.route('/years_experience', methods=['GET'])

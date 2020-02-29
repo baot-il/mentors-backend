@@ -24,11 +24,11 @@ def create_tables():
         db.create_tables(MODELS)
         
 
-def init_technologies(techs=TECHS):
+def init_technologies(techs):
     Technology.insert_many([{'name': tech} for tech in techs]).execute()
 
 
 if __name__ == '__main__':
     drop_tables()
     create_tables()
-    init_technologies()
+    init_technologies(techs=TECHS)
