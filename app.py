@@ -1,38 +1,28 @@
-from db import _get_technologies
-from flask import Flask, request
-from flask_cors import CORS, cross_origin
+from flask import Flask
+from flask_cors import CORS
+from peewee import PostgresqlDatabase
+from urllib.parse import uses_netloc, urlparse
 import os
 
+uses_netloc.append('postgres')
+url = urlparse(os.environ['DATABASE_URL'])
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(os.environ['APP_SETTINGS'])
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['CORS_HEADERS'] = 'Content-Type'
-    cors = CORS(app)
-    register_extensions(app)
-    return app
+DATABASE = {
+    'engine': 'peewee.PostgresqlDatabase',
+    'name': url.path[1:],
+    'password': url.password,
+    'host': url.hostname,
+    'port': url.port,
+}
 
-
-def register_extensions(app):
-    from extensions import db
-    from extensions import migrate
-    db.init_app(app)
-    migrate.init_app(app)
-
-
-app = create_app()
-
-
-@app.route('/')
-def hello():
-    return "Hello World!"
-
-
-@app.route('/technologies', methods=['GET', 'POST'])
-@cross_origin()
-def get_technologies():
-    return _get_technologies(request)
+app = Flask(__name__)
+app.config.from_object(os.environ['APP_SETTINGS'])
+db = PostgresqlDatabase(database=url.path[1:],
+                        user=url.username,
+                        password=url.password,
+                        host=url.hostname,
+                        port=url.port)
+cors = CORS(app)
 
 
 if __name__ == '__main__':
