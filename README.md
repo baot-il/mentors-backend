@@ -15,8 +15,8 @@ _baot-mentors_ is the docker container's name and can be changed freely.
 * username: postgres
 * password: somePassword
 5. Clone this repository and install all dependencies using `pip install -r requirements.txt`.
-6. Set the following environment variables (you can do so for your virtual
-   environment):
+   Consider using a virtual environment to prevent versions conflicts.
+6. Set the following environment variables (you can set them in PyCharm's run configurations):
     * `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
     * `SECRET_KEY=someSecretStringUsedByFlask`
     * `APP_SETTINGS=config.DevelopemtnConfig`
