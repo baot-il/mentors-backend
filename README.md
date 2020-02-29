@@ -76,3 +76,5 @@ simply run _reset_db.py_ which will re-create the DB according to the schema in 
 
 
 ## Project Architecture
+
+![Project Architecture](/resources/arch.png)
