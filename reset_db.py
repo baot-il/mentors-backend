@@ -1,13 +1,17 @@
+"""
+Run this script from Heroku CLI to reset the application's DB.
+"""
+
 from app import db
 from models import Mentor, Mentee, Technology, Match
 
 
 MODELS = [Mentor, Mentee, Technology, Match]
-TECHS = ['Classical Data Science', 'Data Science ML', 'Data Science CV', 'Data Science NLP',
+TECHS = ('Classical Data Science', 'Data Science ML', 'Data Science CV', 'Data Science NLP',
          'Backend Software Engineering', 'Frontend Software Engineering', 'Full-stack Software Engineering',
          'Big Data Engineering', 'Embedded Software Engineering', 'Algorithms Developer/Researcher',
          'Team Lead', 'VP R&D', 'CEO/Co-CEO', 'Tech Lead', 'Architect', 'Mobile Software Engineer (Android/iOS)',
-         'Automation Engineer']
+         'Automation Engineer')
 
 
 def drop_tables():
