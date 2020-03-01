@@ -68,3 +68,13 @@ class Match(BaseModel):
 
     class Meta:
         primary_key = CompositeKey('mentor_id', 'mentee_id')
+
+
+class User(BaseModel):
+    id = AutoField(primary_key=True)
+    uid = TextField()
+    created_on = DateTimeField(default=datetime.datetime.now)
+    mentor_id = ForeignKeyField(Mentor, lazy_load=False)
+    mentee_id = ForeignKeyField(Mentee, lazy_load=False)
+    is_manager = BooleanField(default=False)
+    is_admin = BooleanField(default=False)

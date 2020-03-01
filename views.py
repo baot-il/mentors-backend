@@ -3,15 +3,31 @@ from flask import request
 from flask_cors import cross_origin
 from models import Mentor, Mentee, Match, Technology
 from peewee import DoesNotExist, IntegrityError
-
+import firebase_admin
+from firebase_admin import auth
 
 YEARS_EXPERIENCE = ['1-2', '3-4', '5-7', '8-10', '10+']
 
+firebase_app = firebase_admin.initialize_app()
 
 @app.route('/')
 def homepage():
     return 'Hello World!'
 
+@app.route('/users/<uid>', methods=['GET', 'POST'])
+@cross_origin()
+def users():
+    user = auth.get_user(uid)
+    if not user or not user.email:
+        return 'Invalid user'
+    if request.method == 'GET':
+        try:
+            return {'users': User.select().where(User.uid == uid).dicts().get()}
+        except DoesNotExist:
+            return {'users': []}
+    else:
+        inserted = User.insert({'uid': uid}).returning().on_conflict_ignore().execute()
+        return '{} user created'.format(inserted)
 
 @app.route('/technologies', methods=['GET', 'POST'])
 @cross_origin()
