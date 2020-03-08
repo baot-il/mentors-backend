@@ -20,6 +20,8 @@ with db.atomic():
         migrator.add_column('mentee', 'first_name', TextField(index=True, null=True)),
         migrator.add_column('mentee', 'last_name', TextField(index=True, null=True)),
         migrator.drop_column('mentee', 'full_name'),
+
+        migrator.add_column('users', 'uid', TextField(index=False, null=True))
     )
 
 '''
