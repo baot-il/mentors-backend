@@ -71,9 +71,9 @@ class Match(BaseModel):
 
 class Users(BaseModel):
     id = AutoField(primary_key=True)
-    uid = TextField()
-    created_on = DateTimeField(default=datetime.datetime.now)
-    mentor_id = ForeignKeyField(Mentor, lazy_load=False)
-    mentee_id = ForeignKeyField(Mentee, lazy_load=False)
-    is_manager = BooleanField(default=False)
-    is_admin = BooleanField(default=False)
+    uid = TextField(null=True)
+    created_on = DateTimeField(default=datetime.datetime.now, null=True)
+    mentor_id = ForeignKeyField(Mentor, lazy_load=False, null=True)
+    mentee_id = ForeignKeyField(Mentee, lazy_load=False, null=True)
+    is_manager = BooleanField(default=False, null=True)
+    is_admin = BooleanField(default=False, null=True)
