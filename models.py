@@ -69,8 +69,7 @@ class Match(BaseModel):
     class Meta:
         primary_key = CompositeKey('mentor_id', 'mentee_id')
 
-
-class User(BaseModel):
+class Users(BaseModel):
     id = AutoField(primary_key=True)
     uid = TextField()
     created_on = DateTimeField(default=datetime.datetime.now)

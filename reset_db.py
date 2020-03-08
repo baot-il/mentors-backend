@@ -3,10 +3,10 @@ Run this script from Heroku CLI to reset the application's DB.
 """
 
 from app import db
-from models import Mentor, Mentee, Technology, Match, User
+from models import Mentor, Mentee, Technology, Match, Users
 
 
-MODELS = [Mentor, Mentee, Technology, Match, User]
+MODELS = [Mentor, Mentee, Technology, Match, Users]
 TECHS = ('Classical Data Science', 'Data Science ML', 'Data Science CV', 'Data Science NLP',
          'Backend Software Engineering', 'Frontend Software Engineering', 'Full-stack Software Engineering',
          'Big Data Engineering', 'Embedded Software Engineering', 'Algorithms Developer/Researcher',

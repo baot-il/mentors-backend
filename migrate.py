@@ -8,7 +8,6 @@ from app import db
 from playhouse.migrate import PostgresqlMigrator, migrate
 from peewee import TextField
 
-
 migrator = PostgresqlMigrator(db)
 with db.atomic():
     migrate(
@@ -22,3 +21,17 @@ with db.atomic():
         migrator.add_column('mentee', 'last_name', TextField(index=True, null=True)),
         migrator.drop_column('mentee', 'full_name'),
     )
+
+'''
+// TODO: add as a python migration.
+CREATE TABLE users (
+	id serial PRIMARY KEY,
+	created_on TIMESTAMP,
+	mentor_id integer,
+	mentee_id integer,
+	FOREIGN KEY (mentor_id) REFERENCES mentor (id),
+	FOREIGN KEY (mentee_id) REFERENCES mentee (id),
+	is_manager Boolean,
+	is_admin Boolean
+)
+'''
