@@ -29,7 +29,7 @@ Backend server code for Baot mentorship application.
 2. Set the following environment variables (you can do so in PyCharm's run configurations):
    - `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
    - `SECRET_KEY=someSecretStringUsedByFlask`
-   - `APP_SETTINGS=config.DevelopementConfig`
+   - `APP_SETTINGS=config.DevelopmentConfig`
    - `GOOGLE_APPLICATION_CREDENTIALS=secretKey` - for prod use FIREBASE_CONFIG instead
 3. Run `python reset_db.py` to initialize the DB tables.
 4. Run `python main_app.py` and verify (using the console output) that the server is running.
