@@ -56,3 +56,7 @@ docs/_build/
 
 # vscode history
 .history
+
+# Virtual env
+myenv/
+pyvenv.cfg
