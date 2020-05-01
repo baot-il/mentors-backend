@@ -1,5 +1,5 @@
 from app import app
-from flask import request
+from flask import request, g
 from flask_cors import cross_origin
 from models import Mentor, Mentee, Match, Technology, Users
 from peewee import DoesNotExist, IntegrityError
@@ -11,13 +11,28 @@ YEARS_EXPERIENCE = ['1-2', '3-4', '5-7', '8-10', '10+']
 
 firebase_app = firebase_admin.initialize_app()
 
+@app.before_request
+def authenticate():
+    if request.method == "OPTIONS":
+        return 'ok', 200
+    headers = request.headers
+    is_valid = False
+    if 'Authorization' in headers:
+        idToken = headers['Authorization'].split(" ")[1]
+        decoded_token = auth.verify_id_token(idToken)
+        if decoded_token:
+            g.uid = decoded_token['uid']
+            is_valid = True
+    if not is_valid:
+        return 'Unauthorised user', 403
+
 @app.route('/')
 def homepage():
     return 'Hello World!'
 
-@app.route('/users/<uid>', methods=['GET', 'POST'])
-@cross_origin()
-def users(uid):
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    uid = g.uid
     user = auth.get_user(uid)
     if not user or not user.email:
         return 'Invalid user', 403
