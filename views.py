@@ -38,12 +38,13 @@ def user():
         return 'Invalid user', 403
     if request.method == 'GET':
         try:
-            return {'users': Users.select().where(Users.uid == uid).dicts().get()}
+            user = Users.select().where(Users.uid == uid).dicts().get()
+            return {'user': user}
         except DoesNotExist:
-            return {'users': None}
+            return {'user': None}
     elif request.method == 'POST':
         user, _ = Users.get_or_create(uid=uid)
-        return {'users': model_to_dict(user)}
+        return {'user': model_to_dict(user)}
     return 'Unsupported method {}'.format(request.method), 405
 
 @app.route('/technologies', methods=['GET', 'POST'])
