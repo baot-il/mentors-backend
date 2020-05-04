@@ -31,6 +31,7 @@ def homepage():
     return 'Hello World!'
 
 @app.route('/user', methods=['GET', 'POST'])
+@cross_origin()
 def user():
     uid = g.uid
     user = auth.get_user(uid)
@@ -97,5 +98,6 @@ def get_mentor_by_id(mentor_id):
 
 
 @app.route('/years_experience', methods=['GET'])
+@cross_origin()
 def get_years_experience():
     return {'years_experience': YEARS_EXPERIENCE}
