@@ -82,8 +82,17 @@ def get_mentor_by_id(mentor_id):
         except DoesNotExist:
             return {'mentors': []}
     elif request.method == 'PUT':
-        mentor_data = request.form
-        updated = Mentor.update(mentor_data).where(Mentor.id == mentor_id).execute()
+        mentor_data = request.json
+        try:
+            Mentor.select().where(Mentor.id == mentor_id).dicts().get()
+            exists = True
+        except DoesNotExist:
+            exists = False
+
+        if exists:
+            updated = Mentor.update(mentor_data).where(Mentor.id == mentor_id).execute()
+        else:
+            updated = Mentor.insert(mentor_data).execute()
         return 'Success' if updated else 'Non updated'
 
 
