@@ -75,25 +75,33 @@ def mentors():
             return 'Mentor exists (email)', 409
 
 
-@app.route('/mentors/<mentor_id>', methods=['GET', 'PUT'])
-def get_mentor_by_id(mentor_id):
+@app.route('/mentor', methods=['GET', 'PUT'])
+def get_mentor_by_uid():
+    uid = g.uid
     if request.method == 'GET':
         try:
-            return {'mentors': Mentor.select().where(Mentor.id == mentor_id).dicts().get()}
+            user = Users.select(Users.mentor_id).where(Users.uid == uid).get()
+            return {'mentors': Mentor.select().where(Mentor.id == user.mentor_id).dicts().get()}
         except DoesNotExist:
             return {'mentors': []}
     elif request.method == 'PUT':
         mentor_data = request.json
         try:
-            Mentor.select().where(Mentor.id == mentor_id).dicts().get()
+            user = Users.select(Users.mentor_id).where(Users.uid == uid).get()
+            Mentor.select().where(Mentor.id == user.mentor_id).dicts().get()
             exists = True
         except DoesNotExist:
             exists = False
 
-        if exists:
-            updated = Mentor.update(mentor_data).where(Mentor.id == mentor_id).execute()
-        else:
-            updated = Mentor.insert(mentor_data).execute()
+        try:
+            if exists:
+                updated = Mentor.update(mentor_data).where(Mentor.id == user.mentor_id).execute()
+                updated_user = Users.update(mentor_id=updated).where(Users.uid == uid).execute()
+            else:
+                updated = Mentor.insert(mentor_data).execute()
+                updated_user = Users.insert(uid=uid, mentor_id=updated, is_manager=False, is_admin=False).execute()
+        except Exception as e:
+            return f'Failed with error: {e}', 409
         return 'Success' if updated else 'Non updated'
 
 
