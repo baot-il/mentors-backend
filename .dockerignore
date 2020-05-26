@@ -1,0 +1,15 @@
+deployment
+.idea
+.vscode
+
+.DS_Store
+__pycache__
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
