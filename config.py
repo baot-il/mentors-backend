@@ -30,3 +30,4 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+    DEVELOPMENT = True
