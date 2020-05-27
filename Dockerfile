@@ -7,13 +7,12 @@ RUN apt-get update && \
     apt-get -y install gcc python3-dev libpq-dev && \
     apt-get clean
 
-WORKDIR /service
+WORKDIR /app
 
 COPY ./requirements.txt ./
 RUN pip install -r requirements.txt
 
 COPY ./ ./
 
-ENV FLASK_APP main_app.py
-
-CMD python reset_db.py && python -m flask run --host=0.0.0.0
+CMD python reset_db.py && \
+    gunicorn --bind 0.0.0.0:5000 main_app:app
