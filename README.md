@@ -24,7 +24,7 @@ Backend server code for Baot mentorship application.
    versioning conflicts.
 
    > :mega: If you're experiencing installation problems with _psycopg2_,
-   > try installing it separately using the command `pip install psycopg2-binary`.
+   > try installing it separately using the command `pip install psycopg2-binary`. (in such case don't forget to comment it on the requirements.txt file and re-run `pip install -r requirements.txt`)
 
 2. Set the following environment variables (you can do so in PyCharm's run configurations):
    - `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
@@ -33,6 +33,9 @@ Backend server code for Baot mentorship application.
    - `GOOGLE_APPLICATION_CREDENTIALS=secretKey` - for prod use FIREBASE_CONFIG instead
 3. Run `python reset_db.py` to initialize the DB tables.
 4. Run `python main_app.py` and verify (using the console output) that the server is running.
+
+**NOTE:** you can skip clause 2-4 and just run `start_env.sh` script which executes them for you
+
 5. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
 
 ## Project Structure
