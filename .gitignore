@@ -56,7 +56,9 @@ docs/_build/
 
 # vscode history
 .history
+.vscode/
 
 # Virtual env
 myenv/
 pyvenv.cfg
+secretKey.json

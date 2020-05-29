@@ -30,11 +30,13 @@ Backend server code for Baot mentorship application.
    - `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
    - `SECRET_KEY=someSecretStringUsedByFlask`
    - `APP_SETTINGS=config.DevelopmentConfig`
-   - `GOOGLE_APPLICATION_CREDENTIALS=secretKey` - for prod use FIREBASE_CONFIG instead
+   - `GOOGLE_APPLICATION_CREDENTIALS=secretKey.json` - for prod use FIREBASE_CONFIG instead
 3. Run `python reset_db.py` to initialize the DB tables.
 4. Run `python main_app.py` and verify (using the console output) that the server is running.
 
-**NOTE:** you can skip clause 2-4 and just run `start_env.sh` script which executes them for you
+**NOTES:**
+- you can skip clause 2-4 and just run `start_env.sh` script (after updating it with you keys) which executes them for you
+- the value for the GOOGLE_APPLICATION_CREDENTIALS is the key file you download from the firebase project by going to this link - https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project&authuser=1 and clicking Create Key on the firebase service account
 
 5. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
 
