@@ -13,6 +13,8 @@ firebase_app = firebase_admin.initialize_app()
 
 @app.before_request
 def authenticate():
+    if app.config["DEVELOPMENT"]:
+        return
     if request.method == "OPTIONS":
         return 'ok', 200
     headers = request.headers
