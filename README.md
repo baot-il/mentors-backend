@@ -27,7 +27,9 @@ Backend server code for Baot mentorship application.
    > try installing it separately using the command `pip install psycopg2-binary`. (in such case don't forget to comment it on the requirements.txt file and re-run `pip install -r requirements.txt`)
 
 **NOTES:**
-- you can skip clause 2-4 and just run `start_env.sh` script (after updating it with you keys) which executes them for you (after first run disable/enable `python reset_db.py` as needed)
+- you can skip clause 2-4 and just -
+  - create a `.env` file similar to `.env.default` and update with your own values
+  - run `start_env.sh` script which executes them for you (after first run disable/enable `python reset_db.py` as needed)
 - the value for the GOOGLE_APPLICATION_CREDENTIALS is the key file you download from the firebase project by going to this link - https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project&authuser=1 and clicking Create Key on the firebase service account
 
 2. Set the following environment variables (you can do so in PyCharm's run configurations):
