@@ -61,4 +61,3 @@ docs/_build/
 # Virtual env
 myenv/
 pyvenv.cfg
-secretKey.json

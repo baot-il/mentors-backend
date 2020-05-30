@@ -26,17 +26,17 @@ Backend server code for Baot mentorship application.
    > :mega: If you're experiencing installation problems with _psycopg2_,
    > try installing it separately using the command `pip install psycopg2-binary`. (in such case don't forget to comment it on the requirements.txt file and re-run `pip install -r requirements.txt`)
 
-2. Set the following environment variables (you can do so in PyCharm's run configurations):
-   - `DATABASE_URL=postgresql://postgres:somePassword@localhost/postgres`
-   - `SECRET_KEY=someSecretStringUsedByFlask`
-   - `APP_SETTINGS=config.DevelopmentConfig`
-   - `GOOGLE_APPLICATION_CREDENTIALS=secretKey.json` - for prod use FIREBASE_CONFIG instead
-3. Run `python reset_db.py` to initialize the DB tables.
-4. Run `python main_app.py` and verify (using the console output) that the server is running.
-
 **NOTES:**
 - you can skip clause 2-4 and just run `start_env.sh` script (after updating it with you keys) which executes them for you (after first run disable/enable `python reset_db.py` as needed)
 - the value for the GOOGLE_APPLICATION_CREDENTIALS is the key file you download from the firebase project by going to this link - https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project&authuser=1 and clicking Create Key on the firebase service account
+
+2. Set the following environment variables (you can do so in PyCharm's run configurations):
+   - `DATABASE_URL=postgresql://postgres:<your local db password>@localhost/postgres`
+   - `SECRET_KEY=someSecretStringUsedByFlask`
+   - `APP_SETTINGS=config.DevelopmentConfig`
+   - `GOOGLE_APPLICATION_CREDENTIALS=<path to secret key>` - for prod use FIREBASE_CONFIG instead
+3. Run `python reset_db.py` to initialize the DB tables.
+4. Run `python main_app.py` and verify (using the console output) that the server is running.
 
 5. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
 
