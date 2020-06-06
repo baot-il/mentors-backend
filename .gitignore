@@ -62,4 +62,6 @@ docs/_build/
 myenv/
 pyvenv.cfg
 
+# Project
 secrets
+.env
