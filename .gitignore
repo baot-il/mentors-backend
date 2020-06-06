@@ -59,4 +59,9 @@ docs/_build/
 
 # Virtual env
 myenv/
+venv/
 pyvenv.cfg
+
+# Personal Pycharm
+*.json
+.idea/
