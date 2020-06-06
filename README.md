@@ -4,14 +4,44 @@ Backend server code for Baot mentorship application.
 
 ## Deploy a Local Setup
 
-### Local Database
-
+### Prerequisites
 1. Install [Docker](https://docs.docker.com/install/) and verify installation.
-2. Install [pgAdmin](https://www.pgadmin.org/download/)
+2. Install [python3](https://www.python.org/downloads/) - version appear [`requirements.txt`](https://github.com/baot-il/mentors-backend/blob/master/requirements.txt).
+3. Install `pip`.
+
+### Getting Started with DB setup (via docker)
+1. Run the following command in shell to setup _PosgradDB_ & _pgAdmin_:
+
+```sh
+./development/scripts/start-local-all.sh
+```
+
+2. Browse to `http://localhost:5050` in your browser and verify _pgAdmin_ page.
+    * _pgAdmin_ Login:
+      * Email Address / Username: admin@baot-il.com
+      * Password: admin-password
+
+3. Connect to your PostgresDB:
+    * In the left menu, right click on the mouse and choose _Create_ -> _Server_.
+    * Go to _Connections_ tab:
+        * Host name/address: postgres-db
+        * Port: 5432
+        * Username: admin
+        * Password: password
+    * Click on _Save_.
+  
+4. Clean the docker environment by running the following command in a shell:
+
+```sh
+./development/scripts/clean-local.sh
+```
+
+### Getting Started with DB setup (from scratch)
+1. Install [pgAdmin](https://www.pgadmin.org/download/)
    (or your favorite PostgreSQL GUI client).
-3. In the command line, tun `docker run -p 5432:5432 --name baot-mentors -e POSTGRES_PASSWORD=somePassword -d postgres`.
+2. In the command line, tun `docker run -p 5432:5432 --name baot-mentors -e POSTGRES_PASSWORD=somePassword -d postgres`.
    _baot-mentors_ is the docker container's name and can be changed freely.
-4. Connect to this DB using your PostgresSQL client with the following details:
+3. Connect to this DB using your PostgresSQL client with the following details:
    - host: localhost
    - port: 5432
    - username: postgres
