@@ -9,16 +9,18 @@ services:
       - 5000:5000
     depends_on:
       - postgres-db
+    restart: always
     environment:
       - DATABASE_URL=postgresql://user:password@postgres-db/postgres
       - FLASK_RUN_PORT=5000
       - FLASK_APP=main_app.py
       - FLASK_ENV=development
       - APP_SETTINGS=config.DevelopmentConfig
-      - GOOGLE_APPLICATION_CREDENTIALS=someSecretStringUsedByFlask
-      - SECRET_KEY=secretKey
+      - GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase-local-env.json
+      - SECRET_KEY=someSecretStringUsedByFlask
 
   postgres-db:
+    container_name: postgres_container
     image: postgres:alpine
     ports:
       - 5432:5432
@@ -28,4 +30,18 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
-    restart: on-failure
+    restart: always
+          
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:latest  
+    ports:
+      - 5050:80
+    depends_on:
+      - postgres-db
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@baot-il.com
+      - PGADMIN_DEFAULT_PASSWORD=admin-password
+    links:
+      - postgres-db
+    restart: always
