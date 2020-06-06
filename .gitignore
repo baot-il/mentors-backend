@@ -56,10 +56,12 @@ docs/_build/
 
 # vscode history
 .history
+.vscode/
 
 # Virtual env
 myenv/
 pyvenv.cfg
+.env
 venv/
 
 # Personal Pycharm
