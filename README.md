@@ -10,18 +10,22 @@ Backend server code for Baot mentorship application.
 3. Install `pip`.
 
 ### Getting Started with DB setup (via docker)
-1. Run the following command in shell to setup _PosgradDB_ & _pgAdmin_:
+1. Add the _Firebase_ credentials file dependency: 
+   * Download the file from our Baot Slack.
+   * Save the file as `firebase-local-env.json` under `secrets` folder.
+  
+2. Run the following command in shell to setup _PosgradDB_ & _pgAdmin_:
 
 ```sh
 ./development/scripts/start-local-all.sh
 ```
 
-2. Browse to `http://localhost:5050` in your browser and verify _pgAdmin_ page.
+3. Browse to `http://localhost:5050` in your browser and verify _pgAdmin_ page.
     * _pgAdmin_ Login:
       * Email Address / Username: admin@baot-il.com
       * Password: admin-password
 
-3. Connect to your PostgresDB:
+4. Connect to your PostgresDB:
     * In the left menu, right click on the mouse and choose _Create_ -> _Server_.
     * Go to _Connections_ tab:
         * Host name/address: postgres-db
@@ -30,7 +34,7 @@ Backend server code for Baot mentorship application.
         * Password: password
     * Click on _Save_.
   
-4. Clean the docker environment by running the following command in a shell:
+5. Clean the docker environment by running the following command in a shell:
 
 ```sh
 ./development/scripts/clean-local.sh
