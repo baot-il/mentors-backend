@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import psycopg2
-import sqlalchemy
 import xlrd
 
 file_name = "mentors_data.xlsx"
@@ -34,7 +33,8 @@ for i in range(1, sheet.nrows):
 	data.append(tuple(row))
 
 insert_sql = """INSERT INTO public.mentor(
-	first_name, last_name, email, phone, created_on, workplace, job_title, bio, academic_bio, job_search, availability, match_preferences, multiple_mentees, can_simulate, technologies, years_experience, comments)
+	first_name, last_name, email, phone, created_on, workplace, job_title, bio, academic_bio, job_search,
+	availability, match_preferences, multiple_mentees, can_simulate, technologies, years_experience, comments)
 	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 """
 
