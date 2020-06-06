@@ -61,3 +61,5 @@ docs/_build/
 # Virtual env
 myenv/
 pyvenv.cfg
+
+secrets
