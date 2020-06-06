@@ -17,7 +17,7 @@ Backend server code for Baot mentorship application.
 2. Run the following command in shell to setup _PosgradDB_ & _pgAdmin_:
 
 ```sh
-./development/scripts/start-local-all.sh
+./development/scripts/start-local-db.sh
 ```
 
 3. Browse to `http://localhost:5050` in your browser and verify _pgAdmin_ page.
