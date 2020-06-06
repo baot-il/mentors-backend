@@ -11,13 +11,14 @@ services:
       - postgres-db
     restart: always
     environment:
-      - DATABASE_URL=postgresql://user:password@postgres-db/postgres
+      - DATABASE_URL=postgresql://admin:password@postgres-db/postgres
       - FLASK_RUN_PORT=5000
       - FLASK_APP=main_app.py
       - FLASK_ENV=development
       - APP_SETTINGS=config.DevelopmentConfig
       - GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase-local-env.json
       - SECRET_KEY=someSecretStringUsedByFlask
+    command: gunicorn --bind 0.0.0.0:5000 main_app:app && python reset_db.py
 
   postgres-db:
     container_name: postgres_container
@@ -27,7 +28,7 @@ services:
     volumes:
       - /var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=user
+      - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
     restart: always

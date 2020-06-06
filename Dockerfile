@@ -14,5 +14,4 @@ RUN pip install -r requirements.txt
 
 COPY ./ ./
 
-CMD python reset_db.py && \
-    gunicorn --bind 0.0.0.0:5000 main_app:app
+CMD gunicorn --bind 0.0.0.0:5000 main_app:app
