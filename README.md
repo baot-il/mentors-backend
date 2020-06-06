@@ -44,7 +44,7 @@ Backend server code for Baot mentorship application.
 3. Connect to this DB using your PostgresSQL client with the following details:
    - host: localhost
    - port: 5432
-   - username: postgres
+   - username: someUsername
    - password: somePassword
 
 ### Local Server
