@@ -1,7 +1,9 @@
-from app import db
-from peewee import Model, AutoField, BooleanField, CompositeKey, DateTimeField, ForeignKeyField, TextField
-from playhouse.postgres_ext import ArrayField
 import datetime
+
+from peewee import Model, AutoField, BooleanField, CompositeKey, DateTimeField, ForeignKeyField, TextField, BigIntegerField
+from playhouse.postgres_ext import ArrayField
+
+from app import db
 
 
 class BaseModel(Model):
@@ -14,7 +16,7 @@ class Mentor(BaseModel):
     first_name = TextField()
     last_name = TextField()
     email = TextField(index=True, unique=True)
-    phone = TextField()
+    phone = BigIntegerField()
     created_on = DateTimeField(default=datetime.datetime.now)
     workplace = TextField(null=True)
     job_title = TextField(null=True)
@@ -40,7 +42,7 @@ class Mentee(BaseModel):
     first_name = TextField()
     last_name = TextField()
     email = TextField(index=True)
-    phone = TextField()
+    phone = BigIntegerField()
     created_on = DateTimeField(default=datetime.datetime.now)
     bio = TextField(null=True)
     academic_bio = TextField(null=True)
@@ -48,7 +50,7 @@ class Mentee(BaseModel):
     technologies = ArrayField(field_class=TextField, null=True)
     years_experience = TextField(null=True)
     comments = TextField(null=True)
-    
+
     class Meta:
         indexes = (
             (('first_name', 'last_name'), True),
@@ -68,6 +70,7 @@ class Match(BaseModel):
 
     class Meta:
         primary_key = CompositeKey('mentor_id', 'mentee_id')
+
 
 class Users(BaseModel):
     id = AutoField(primary_key=True)
