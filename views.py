@@ -6,8 +6,11 @@ from peewee import DoesNotExist, IntegrityError
 from playhouse.shortcuts import model_to_dict
 import firebase_admin
 from firebase_admin import auth
+import os
 
 YEARS_EXPERIENCE = ['1-2', '3-4', '5-7', '8-10', '10+']
+MANAGER = 'manager'
+MENTOR = 'mentor'
 
 firebase_app = firebase_admin.initialize_app()
 
@@ -21,10 +24,28 @@ def authenticate():
         idToken = headers['Authorization'].split(" ")[1]
         decoded_token = auth.verify_id_token(idToken)
         if decoded_token:
+            add_custom_claims(decoded_token)
             g.uid = decoded_token['uid']
             is_valid = True
     if not is_valid:
         return 'Unauthorised user', 403
+
+def add_custom_claims(decoded_token):
+    claims = decoded_token
+    if claims[MANAGER] or claims[MENTOR]:
+        return # claims are defined.
+
+    managers = os.environ['MANAGERS'].split(',')
+    if True in [decoded_token['email'] == email for email in managers]:
+        auth.set_custom_user_claims(uid, {'manager': True})
+
+@app.route('/resetCustomClaims', methods=['GET'])
+    def modify_custom_claims():
+        if 'Authorization' in headers:
+            idToken = headers['Authorization'].split(" ")[1]
+            decoded_token = auth.verify_id_token(idToken)
+            if decoded_token:
+                auth.set_custom_user_claims(uid, {})
 
 @app.route('/')
 def homepage():
