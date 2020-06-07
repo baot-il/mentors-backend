@@ -18,7 +18,9 @@ services:
       - APP_SETTINGS=config.DevelopmentConfig
       - GOOGLE_APPLICATION_CREDENTIALS=secrets/firebase-local-env.json
       - SECRET_KEY=someSecretStringUsedByFlask
-    command: gunicorn --bind 0.0.0.0:5000 main_app:app && python reset_db.py
+    command: >
+      sh -c "flask run -h 0.0.0.0 -p 5000 && \
+            python reset_db.py"
 
   postgres-db:
     container_name: postgres_container
