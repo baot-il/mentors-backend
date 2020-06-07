@@ -13,12 +13,10 @@ firebase_app = firebase_admin.initialize_app()
 
 @app.before_request
 def authenticate():
-    if app.config["DEVELOPMENT"]:
-        return
     if request.method == "OPTIONS":
         return 'ok', 200
     headers = request.headers
-    is_valid = False
+    is_valid = app.config["DEVELOPMENT"] or False
     if 'Authorization' in headers:
         idToken = headers['Authorization'].split(" ")[1]
         decoded_token = auth.verify_id_token(idToken)
