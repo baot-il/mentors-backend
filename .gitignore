@@ -62,7 +62,6 @@ docs/_build/
 myenv/
 pyvenv.cfg
 .env
-
 venv/
 
 # Personal Pycharm
