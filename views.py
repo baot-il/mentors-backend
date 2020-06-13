@@ -51,13 +51,12 @@ def add_custom_claims(decoded_token):
     auth.set_custom_user_claims(uid, {MENTOR: True})
     return False
 
+@manager_access
 @app.route('/resetCustomClaims', methods=['GET'])
     def modify_custom_claims():
-        if 'Authorization' in headers:
-            idToken = headers['Authorization'].split(" ")[1]
-            decoded_token = auth.verify_id_token(idToken)
-            if decoded_token:
-                auth.set_custom_user_claims(uid, {})
+        email_to_reset = request.args.get('email')
+        user = auth.get_user_by_email(email)
+        auth.set_custom_user_claims(user.uid, {})
 
 def manager_access(view_function):
   @wraps(view_function)
