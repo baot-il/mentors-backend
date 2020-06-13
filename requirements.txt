@@ -19,3 +19,4 @@ Werkzeug==1.0.0
 wtf-peewee==3.0.0
 WTForms==2.2.1
 firebase_admin==4.0.0
+xlrd~=1.2.0

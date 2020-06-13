@@ -65,3 +65,8 @@ pyvenv.cfg
 # Project
 secrets
 .env
+venv/
+
+# Personal Pycharm
+*.json
+.idea/
