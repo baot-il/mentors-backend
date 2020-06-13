@@ -7,6 +7,7 @@ from playhouse.shortcuts import model_to_dict
 import firebase_admin
 from firebase_admin import auth
 import os
+from functools import wraps
 
 YEARS_EXPERIENCE = ['1-2', '3-4', '5-7', '8-10', '10+']
 MANAGER = 'manager'
@@ -14,32 +15,41 @@ MENTOR = 'mentor'
 
 firebase_app = firebase_admin.initialize_app()
 
+def parse_token(headers):
+    decoded_token = None
+    if 'Authorization' in headers:
+        idToken = headers['Authorization'].split(" ")[1]
+        decoded_token = auth.verify_id_token(idToken)
+    return decoded_token
+
 @app.before_request
 def authenticate():
     if app.config["DEVELOPMENT"]:
         return
     if request.method == "OPTIONS":
         return 'ok', 200
-    headers = request.headers
-    is_valid = False
-    if 'Authorization' in headers:
-        idToken = headers['Authorization'].split(" ")[1]
-        decoded_token = auth.verify_id_token(idToken)
-        if decoded_token:
-            add_custom_claims(decoded_token)
-            g.uid = decoded_token['uid']
-            is_valid = True
-    if not is_valid:
+    decoded_token = parse_token(request.headers)
+    if decoded_token:
+        g.is_manager = add_custom_claims(decoded_token)
+        g.uid = decoded_token['uid']
+    else:
         return 'Unauthorised user', 403
 
 def add_custom_claims(decoded_token):
+    # TODO: in future versions, add a UI screen for admins to add 
+    # managers, and remove from environment variables.
     claims = decoded_token
-    if claims[MANAGER] or claims[MENTOR]:
-        return # claims are defined.
+    if claims[MANAGER]:
+        return True
+    if claims[MENTOR]:
+        return False
 
     managers = os.environ['MANAGERS'].split(',')
     if True in [decoded_token['email'] == email for email in managers]:
-        auth.set_custom_user_claims(uid, {'manager': True})
+        auth.set_custom_user_claims(uid, {MANAGER: True})
+        return True
+    auth.set_custom_user_claims(uid, {MENTOR: True})
+    return False
 
 @app.route('/resetCustomClaims', methods=['GET'])
     def modify_custom_claims():
@@ -48,6 +58,14 @@ def add_custom_claims(decoded_token):
             decoded_token = auth.verify_id_token(idToken)
             if decoded_token:
                 auth.set_custom_user_claims(uid, {})
+
+def manager_access(view_function):
+  @wraps(view_function)
+  def wrapper(*args, **kwargs):
+    if not g.is_manager:
+      abort(403, "This end point is not allowed to users with your permissions.")
+    return view_function(*args, **kwargs)
+  return wrapper
 
 @app.route('/')
 def homepage():
@@ -85,6 +103,7 @@ def technologies():
 
 
 @app.route('/mentors', methods=['GET', 'POST'])
+@manager_access
 @cross_origin()
 def mentors():
     if request.method == 'GET':
