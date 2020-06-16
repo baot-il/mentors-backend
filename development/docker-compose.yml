@@ -30,7 +30,7 @@ services:
     volumes:
       - /var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=admin
+      - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=postgres
     restart: always
