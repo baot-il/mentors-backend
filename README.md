@@ -9,10 +9,14 @@ Backend server code for Baot mentorship application.
 2. Install [python3](https://www.python.org/downloads/) - version appear [`requirements.txt`](https://github.com/baot-il/mentors-backend/blob/master/requirements.txt).
 3. Install `pip`.
 
-### Getting Started with DB setup (via docker)
+### Getting Started with DB setup 
+
+► Either [via docker](#via-docker) OR [from scratch](#from-scratch).
+
+#### via docker
 1. Add the _Firebase_ credentials file dependency: 
    * Download the file from our Baot Slack.
-   * Save the file as `firebase-local-env.json` under `secrets` folder.
+   * Save the file as `firebase-local-env.json` under `secrets` folder (`touch secrets/firebase-local-env.json` and copy the details).
   
 2. Run the following command in shell to setup _PosgradDB_ & _pgAdmin_:
 
@@ -40,38 +44,46 @@ Backend server code for Baot mentorship application.
 ./development/scripts/clean-local.sh
 ```
 
-### Getting Started with DB setup (from scratch)
-1. Install [pgAdmin](https://www.pgadmin.org/download/)
-   (or your favorite PostgreSQL GUI client).
+#### from scratch
+1. Install [pgAdmin](https://www.pgadmin.org/download/) (or your other favorite PostgreSQL GUI client).
+   
 2. In the command line, tun `docker run -p 5432:5432 --name baot-mentors -e POSTGRES_PASSWORD=somePassword -d postgres`.
    _baot-mentors_ is the docker container's name and can be changed freely.
+
 3. Connect to this DB using your PostgresSQL client with the following details:
    - host: localhost
    - port: 5432
    - username: someUsername
    - password: somePassword
 
-### Local Server
+4. Download _Firebase_ credentials file dependency: 
+   * Go to https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project&authuser=1
+   * Click Create Key on the firebase service account.
+   * Save the file as `firebase-local-env.json` under `secrets` folder.
 
-1. Clone this repository and install all dependencies using `pip install -r requirements.txt`.
-   Consider using Python's virtual environment (_venv_) to prevent
-   versioning conflicts.
+### Running Local Server
 
-   > :mega: If you're experiencing installation problems with _psycopg2_,
-   > try installing it separately using the command `pip install psycopg2-binary`. (in such case don't forget to comment it on the requirements.txt file and re-run `pip install -r requirements.txt`)
+**NOTE:**
+You can **skip steps 2-4** below with:
+- Create a `.env` file similar to `.env.default` and update with your own values.
+- Run `start_env.sh` script which executes them for you (after first run disable/enable `python reset_db.py` as needed).
 
-**NOTES:**
-- you can skip clause 2-4 and just -
-  - create a `.env` file similar to `.env.default` and update with your own values
-  - run `start_env.sh` script which executes them for you (after first run disable/enable `python reset_db.py` as needed)
-- the value for the GOOGLE_APPLICATION_CREDENTIALS is the key file you download from the firebase project by going to this link - https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts?supportedpurview=project&authuser=1 and clicking Create Key on the firebase service account
+#### Setup local server
+1. Install all dependencies using `pip install -r requirements.txt`.
+   Consider using Python's virtual environment (`venv`) to prevent versioning conflicts.
+
+   > :mega: 
+   > If you're experiencing installation problems with `psycopg2`, try installing it separately using the command `pip install psycopg2-binary`. 
+   > After the sperate installation, comment it in the `requirements.txt` file and re-run `pip install -r requirements.txt`.
 
 2. Set the following environment variables (you can do so in PyCharm's run configurations):
    - `DATABASE_URL=postgresql://postgres:<your local db password>@localhost/postgres`
    - `SECRET_KEY=someSecretStringUsedByFlask`
    - `APP_SETTINGS=config.DevelopmentConfig`
-   - `GOOGLE_APPLICATION_CREDENTIALS=<path to secret key>` - for prod use FIREBASE_CONFIG instead
+   - `GOOGLE_APPLICATION_CREDENTIALS=./secrets/firebase-local-env.json` - for prod use FIREBASE_CONFIG instead
+
 3. Run `python reset_db.py` to initialize the DB tables.
+
 4. Run `python main_app.py` and verify (using the console output) that the server is running.
 
 5. Browse to `http://localhost:5000` in your browser and verify you get a _Hello World_ page.
